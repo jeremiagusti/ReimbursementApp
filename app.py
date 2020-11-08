@@ -1,14 +1,16 @@
+import os
 from flask import Flask, render_template
-from apps.approver import approver_app
-from apps.requester import requester_app
+from apps.requestor.requestor_index import RequestorIndexView
+from apps.approver.approver_index import ApproverIndexView
 
-app = Flask(__name__) 
-app.register_blueprint(approver_app.app, url_prefix='/approver')
-app.register_blueprint(requester_app.app, url_prefix='/requester')
+app = Flask(__name__, template_folder="templates") 
 
 @app.route("/")
 def index():
     return "Hello World"
+
+# Requestor related applications
+RequestorIndexView.register(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
